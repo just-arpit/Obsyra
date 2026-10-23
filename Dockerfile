@@ -1,8 +1,7 @@
 FROM node:20-bookworm-slim
 
-# Set non-interactive debian frontend & default environment
+# Set non-interactive debian frontend
 ENV DEBIAN_FRONTEND=noninteractive
-ENV NODE_ENV=production
 ENV PORT=4000
 
 # Install system dependencies: git, curl, tar, python3
@@ -35,8 +34,8 @@ COPY package.json package-lock.json ./
 COPY backend/package.json ./backend/
 COPY frontend/package.json ./frontend/
 
-# Install dependencies needed for building
-RUN npm install
+# Install all dependencies including devDependencies (TypeScript/tsc & Vite) needed to compile
+RUN npm install --include=dev
 
 # Copy application source code
 COPY backend ./backend
@@ -44,6 +43,9 @@ COPY frontend ./frontend
 
 # Build both backend (tsc) and frontend (vite)
 RUN npm run build
+
+# Switch to production mode for runtime
+ENV NODE_ENV=production
 
 # Expose default port (Render & Railway inject PORT environment variable dynamically)
 EXPOSE 4000
