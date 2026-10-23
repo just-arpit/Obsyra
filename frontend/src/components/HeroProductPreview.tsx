@@ -41,7 +41,7 @@ export const HeroProductPreview: React.FC<HeroProductPreviewProps> = ({
           </div>
           <div className="h-3.5 w-[1px] bg-white/10" />
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-xs text-white">VantaScan Engine</span>
+            <span className="font-semibold text-xs text-white">Obsyra Engine</span>
             <span className="text-[10px] text-slate-500 font-mono">/ review-session-01</span>
             <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-medium bg-amber-500/15 text-amber-400 border border-amber-500/30">
               Demo Baseline

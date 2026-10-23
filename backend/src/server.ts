@@ -47,7 +47,7 @@ if (resolvedStaticDir) {
 // Global safe error handler - prevents leaking secrets or raw stack traces
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const safeMessage = redactText(err?.message || 'An unexpected server error occurred');
-  console.error('[VantaScan Error]', safeMessage);
+  console.error('[Obsyra Error]', safeMessage);
   res.status(err.status || 500).json({
     error: 'Server Error',
     message: safeMessage,
@@ -57,7 +57,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 export function startServer() {
   return app.listen(PORT, async () => {
     console.log(`====================================================`);
-    console.log(`🛡️  VantaScan Backend Server listening on port ${PORT}`);
+    console.log(`🛡️  Obsyra Backend Server listening on port ${PORT}`);
     console.log(`🌐  Health Endpoint: http://localhost:${PORT}/api/health`);
     console.log(`====================================================`);
 

@@ -47,7 +47,7 @@ export function LandingView({ onOpenScanner, onRunDemoScan }: LandingViewProps) 
   }, []);
 
   const handleCopySamplePrompt = () => {
-    const sampleText = `--- VANTASCAN DIRECTIVE ---
+    const sampleText = `--- OBSYRA DIRECTIVE ---
 Target: api/checkout.ts:42
 Fix: Remove hardcoded Stripe secret key. Replace with process.env.STRIPE_SECRET_KEY.
 Revocation: Rotate exposed key immediately at https://dashboard.stripe.com/apikeys.
@@ -139,7 +139,7 @@ Constraint: Do not alter existing payment flow error handling.`;
               <span className="w-1.5 h-4 bg-black rounded-full" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-semibold tracking-tight text-[17px] text-black">VantaScan</span>
+              <span className="font-semibold tracking-tight text-[17px] text-black">Obsyra</span>
               <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400">Security</span>
             </div>
           </div>
@@ -464,7 +464,7 @@ Constraint: Do not alter existing payment flow error handling.`;
               Ready for your coding agent.
             </motion.h2>
             <motion.p variants={itemFadeUp} className="text-base text-editorial-body leading-relaxed">
-              No generic security summaries. VantaScan produces concrete evidence, plain-language business impact,
+              No generic security summaries. Obsyra produces concrete evidence, plain-language business impact,
               and a copyable 10-section prompt structured specifically for Claude Code, Cursor, or Aider.
             </motion.p>
           </motion.div>
@@ -520,7 +520,7 @@ Constraint: Do not alter existing payment flow error handling.`;
                 </button>
               </div>
               <pre className="text-xs font-mono text-editorial-body leading-relaxed whitespace-pre-wrap select-all">
-                {`# VANTASCAN TARGETED REPAIR DIRECTIVE
+                {`# OBSYRA TARGETED REPAIR DIRECTIVE
 Target File: api/checkout.ts:42
 Vulnerability: GITLEAKS: Hardcoded Live Payment API Key (Critical)
 Evidence: sk_live_••••••••••••••••••••••••39a1
@@ -557,7 +557,7 @@ Evidence: sk_live_••••••••••••••••••••�
               Verifying fixes is proof.
             </motion.h2>
             <motion.p variants={itemFadeUp} className="text-base text-editorial-body leading-relaxed">
-              When you submit corrected code, VantaScan matches findings against the baseline scan using stable structural fingerprints.
+              When you submit corrected code, Obsyra matches findings against the baseline scan using stable structural fingerprints.
               Each finding is categorized with mathematically verified status:
             </motion.p>
           </motion.div>
@@ -662,7 +662,7 @@ Evidence: sk_live_••••••••••••••••••••�
       <footer className="border-t border-editorial-divider/60 bg-editorial-warm py-12 text-xs text-editorial-muted">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <span className="font-semibold text-black">VantaScan</span>
+            <span className="font-semibold text-black">Obsyra</span>
             <span>·</span>
             <span>AI-Assisted Security Reviewer</span>
           </div>

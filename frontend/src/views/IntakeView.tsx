@@ -13,6 +13,8 @@ import {
   Sparkles,
   Zap,
   CheckCircle2,
+  Globe,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface IntakeViewProps {
@@ -32,7 +34,7 @@ export function IntakeView({
 }: IntakeViewProps) {
   const [intakeMethod, setIntakeMethod] = useState<'zip' | 'github'>('zip');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [projectName, setProjectName] = useState('vantascan');
+  const [projectName, setProjectName] = useState('obsyra');
   const [baselineScanId, setBaselineScanId] = useState<string>('');
   const [targetUrl, setTargetUrl] = useState('');
   const [authorizedConsent, setAuthorizedConsent] = useState(false);
@@ -58,7 +60,7 @@ export function IntakeView({
         return;
       }
       setSelectedFile(file);
-      if (!projectName || projectName === 'vantascan') {
+      if (!projectName || projectName === 'obsyra') {
         setProjectName(file.name.replace(/\.zip$/i, ''));
       }
     }
@@ -78,7 +80,7 @@ export function IntakeView({
         return;
       }
       setSelectedFile(file);
-      if (!projectName || projectName === 'vantascan') {
+      if (!projectName || projectName === 'obsyra') {
         setProjectName(file.name.replace(/\.zip$/i, ''));
       }
     }
@@ -191,7 +193,7 @@ export function IntakeView({
           Let&apos;s secure your code.
         </h1>
         <p className="text-sm text-neutral-500 mt-2 max-w-2xl leading-relaxed">
-          Bring your project into VantaScan. We&apos;ll inspect the source, identify security risks, and help you fix what matters.
+          Bring your project into Obsyra. We&apos;ll inspect the source, identify security risks, and help you fix what matters.
         </p>
       </div>
 
@@ -314,6 +316,15 @@ export function IntakeView({
                 .zip only · up to 50 MB · 5,000 files · 200 MB unpacked
               </p>
 
+              {/* Zero-retention security disclaimer matching ss2 */}
+              <div className="flex items-start gap-2.5 p-3 rounded-[6px] bg-neutral-50 border border-neutral-200/90 text-xs text-neutral-600 leading-relaxed -mt-1">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-semibold text-neutral-900">Zero Code Retention Guarantee:</span>{' '}
+                  We read your codebase strictly to perform automated security analysis. We do <strong>not</strong> store, share, or persist your code anywhere. Files are unpacked in an ephemeral sandbox and immediately destroyed after the scan.
+                </div>
+              </div>
+
               {/* Input Row: Project name & Compare with optional baseline */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-neutral-100">
                 <div>
@@ -322,7 +333,7 @@ export function IntakeView({
                   </label>
                   <input
                     type="text"
-                    placeholder="vantascan"
+                    placeholder="obsyra"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     className="w-full px-3 py-2 bg-white border border-neutral-200 rounded-[6px] text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-400 transition-colors"
@@ -403,6 +414,42 @@ export function IntakeView({
                 </div>
 
                 <div>
+                  <label className="block text-xs font-medium text-neutral-800 mb-1.5 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Globe className="w-3.5 h-3.5 text-neutral-500" />
+                      Website or API Endpoint URL (Optional)
+                    </span>
+                    <span className="text-[11px] font-mono text-neutral-400">Optional live test</span>
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://api.example.com or https://example.com"
+                    value={targetUrl}
+                    onChange={(e) => setTargetUrl(e.target.value)}
+                    className="w-full px-3 py-2 bg-white border border-neutral-200 rounded-[6px] text-xs text-neutral-900 font-mono placeholder:text-neutral-400 focus:outline-none focus:border-neutral-400"
+                  />
+                  <p className="mt-1.5 text-[11px] text-neutral-400">
+                    Live endpoint audit: verifies SSL/TLS ciphers, HTTP security headers (CSP, HSTS, X-Frame), exposed routes, and API posture.
+                  </p>
+                </div>
+
+                {targetUrl.trim() && (
+                  <div className="p-3 bg-white rounded-[6px] border border-neutral-200 text-xs">
+                    <label className="flex items-start gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={authorizedConsent}
+                        onChange={(e) => setAuthorizedConsent(e.target.checked)}
+                        className="mt-0.5 rounded border-neutral-300 text-neutral-900 focus:ring-0"
+                      />
+                      <span className="text-neutral-700 leading-tight">
+                        I confirm that I own or am explicitly authorized to perform non-invasive security checks on this endpoint (RFC1918 / localhost / cloud metadata blocked).
+                      </span>
+                    </label>
+                  </div>
+                )}
+
+                <div>
                   <label className="block text-xs font-medium text-neutral-800 mb-1.5">
                     Branch (Optional)
                   </label>
@@ -424,7 +471,7 @@ export function IntakeView({
                   </label>
                   <input
                     type="text"
-                    placeholder="vantascan"
+                    placeholder="obsyra"
                     value={projectName}
                     onChange={(e) => setProjectName(e.target.value)}
                     className="w-full px-3 py-2 bg-white border border-neutral-200 rounded-[6px] text-xs text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-neutral-400 transition-colors"

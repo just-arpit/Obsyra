@@ -1,7 +1,7 @@
 {
   "name": "vantascan",
   "version": "1.0.0",
-  "description": "VantaScan — Full-Stack AI Security Reviewer for AI-built web applications",
+  "description": "Obsyra — Full-Stack AI Security Reviewer for AI-built web applications",
   "private": true,
   "workspaces": [
     "backend",

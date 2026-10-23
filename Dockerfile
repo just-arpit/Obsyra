@@ -4,12 +4,13 @@ FROM node:22-bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PORT=4000
 
-# Install system dependencies: git, curl, tar, python3
+# Install system dependencies: git, curl, tar, gzip, python3
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     ca-certificates \
     tar \
+    gzip \
     python3 \
     python3-pip \
     python3-setuptools \
@@ -19,12 +20,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then GITLEAKS_ARCH="x64"; else GITLEAKS_ARCH="arm64"; fi && \
     curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_${GITLEAKS_ARCH}.tar.gz" | tar -xz -C /usr/local/bin gitleaks && \
-    chmod +x /usr/local/bin/gitleaks || true
+    chmod +x /usr/local/bin/gitleaks && \
+    /usr/local/bin/gitleaks version
 
-# Install Trivy
-RUN curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.50.0 || true
+# Install Trivy (supports both x86_64 and arm64 architectures)
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then TRIVY_ARCH="64bit"; else TRIVY_ARCH="ARM64"; fi && \
+    curl -sSL "https://github.com/aquasecurity/trivy/releases/download/v0.76.1/trivy_0.76.1_Linux-${TRIVY_ARCH}.tar.gz" | tar -xz -C /usr/local/bin trivy && \
+    chmod +x /usr/local/bin/trivy && \
+    /usr/local/bin/trivy --version
 
-# Install Semgrep (built-in rule engine acts as fallback if not installed)
+# Attempt Semgrep installation (if omitted or memory-constrained on free tier, Obsyra uses its built-in AST engine)
 RUN pip3 install --no-cache-dir --break-system-packages semgrep || true
 
 WORKDIR /app

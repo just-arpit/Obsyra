@@ -13,7 +13,7 @@ export function buildReadyToPastePrompt(projectName: string, findings: Finding[]
 
   lines.push(`# SECURITY REMEDIATION INSTRUCTIONS FOR AI CODING AGENT`);
   lines.push(`**Target Project:** ${projectName}`);
-  lines.push(`**Reviewer:** VantaScan Multi-Scanner AI Security Reviewer`);
+  lines.push(`**Reviewer:** Obsyra Multi-Scanner AI Security Reviewer`);
   lines.push(`**Date Generated:** ${new Date().toISOString()}`);
   lines.push(`**Total Findings Detected:** ${findings.length}`);
   lines.push('');

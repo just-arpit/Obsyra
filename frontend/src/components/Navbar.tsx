@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="font-extrabold tracking-tight text-white text-base">VantaScan</span>
+                  <span className="font-extrabold tracking-tight text-white text-base">Obsyra</span>
                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-brand-orange/15 text-brand-orange border border-brand-orange/30">
                     <Sparkles className="w-2.5 h-2.5 text-brand-orange" />
                     Scanner

@@ -15,13 +15,18 @@ const COMMON_SEARCH_PATHS: Record<string, string[]> = {
 
 export async function detectScanner(tool: 'gitleaks' | 'semgrep' | 'trivy'): Promise<ScannerBinaryInfo> {
   const candidatePaths = COMMON_SEARCH_PATHS[tool] || [tool];
+  const primaryArgs = tool === 'gitleaks' ? ['version'] : ['--version'];
 
   for (const execPath of candidatePaths) {
     if (!execPath) continue;
     try {
-      const res = await executeCommandSafe(execPath, ['--version'], process.cwd(), 4000);
-      if (res.exitCode === 0 && res.stdout) {
-        const firstLine = res.stdout.trim().split('\n')[0] || '';
+      let res = await executeCommandSafe(execPath, primaryArgs, process.cwd(), 5000);
+      if (res.exitCode !== 0 && tool === 'gitleaks') {
+        res = await executeCommandSafe(execPath, ['--version'], process.cwd(), 5000);
+      }
+      if (res.exitCode === 0 && (res.stdout || res.stderr)) {
+        const output = (res.stdout || res.stderr).trim();
+        const firstLine = output.split('\n')[0] || '';
         return {
           installed: true,
           version: firstLine,

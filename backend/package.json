@@ -1,7 +1,7 @@
 {
   "name": "vantascan-backend",
   "version": "1.0.0",
-  "description": "Backend API and scanner orchestration engine for VantaScan",
+  "description": "Backend API and scanner orchestration engine for Obsyra",
   "main": "dist/server.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",

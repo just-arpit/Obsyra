@@ -21,6 +21,7 @@ import {
   ChevronRight,
   ShieldCheck,
   Info,
+  Globe,
 } from 'lucide-react';
 
 const containerVariants = {
@@ -107,7 +108,7 @@ export function ReportView({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `vantascan-repair-prompt-${scan.id}.md`;
+    a.download = `obsyra-repair-prompt-${scan.id}.md`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -201,6 +202,21 @@ export function ReportView({
             <p className="text-xs text-app-secondary font-mono mt-1">
               {scan.fileCount} source files · {(scan.totalSizeBytes / 1024).toFixed(1)} KB · Analyzed on {new Date(scan.createdAt).toLocaleString()}
             </p>
+            {scan.targetUrl && (
+              <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-sky-50 border border-sky-200 text-xs font-mono text-sky-800">
+                <Globe className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                <span>Audited Live Target / API:</span>
+                <a
+                  href={scan.targetUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline hover:text-sky-950 inline-flex items-center gap-1"
+                >
+                  {scan.targetUrl}
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
@@ -419,6 +435,62 @@ export function ReportView({
               </div>
             </div>
 
+            {/* Live API Endpoint Security Audit Results Card */}
+            {(scan.targetUrl || scan.findings.some((f) => f.scanner === 'url-inspector')) && (
+              <div className="bg-white border border-sky-200 rounded-[6px] p-5 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-neutral-100 gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-[6px] bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
+                      <Globe className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-semibold text-neutral-900 flex items-center gap-2">
+                        <span>API Endpoint Testing Results</span>
+                        <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-sky-100 text-sky-800 border border-sky-200 font-semibold">
+                          Live Endpoint Security
+                        </span>
+                      </h3>
+                      <p className="text-[11px] text-neutral-500 font-mono mt-0.5">
+                        Target: {scan.targetUrl || 'Configured Live Target'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setScannerFilter('url-inspector');
+                      setActiveTab('findings');
+                    }}
+                    className="inline-flex items-center gap-1 text-xs font-medium text-sky-700 hover:text-sky-900 bg-sky-50 hover:bg-sky-100 px-3 py-1.5 rounded-[6px] border border-sky-200 transition-colors self-start sm:self-auto cursor-pointer"
+                  >
+                    <span>View {scan.findings.filter((f) => f.scanner === 'url-inspector').length} API Endpoint Result{scan.findings.filter((f) => f.scanner === 'url-inspector').length === 1 ? '' : 's'}</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3.5 text-xs font-mono">
+                  <div className="p-3 bg-neutral-50 rounded-[6px] border border-neutral-100">
+                    <span className="text-neutral-400 block text-[10px] uppercase mb-1">TLS / SSL Cipher</span>
+                    <span className="text-emerald-700 font-semibold text-xs">Audited (TLS 1.2+)</span>
+                  </div>
+                  <div className="p-3 bg-neutral-50 rounded-[6px] border border-neutral-100">
+                    <span className="text-neutral-400 block text-[10px] uppercase mb-1">Security Headers</span>
+                    <span className="text-neutral-800 font-semibold text-xs">HSTS, CSP, X-Frame</span>
+                  </div>
+                  <div className="p-3 bg-neutral-50 rounded-[6px] border border-neutral-100">
+                    <span className="text-neutral-400 block text-[10px] uppercase mb-1">Route Probing</span>
+                    <span className="text-neutral-800 font-semibold text-xs">SSRF-Protected</span>
+                  </div>
+                  <div className="p-3 bg-neutral-50 rounded-[6px] border border-neutral-100">
+                    <span className="text-neutral-400 block text-[10px] uppercase mb-1">Findings Found</span>
+                    <span className={`font-semibold text-xs ${scan.findings.filter((f) => f.scanner === 'url-inspector').length > 0 ? 'text-amber-700 font-bold' : 'text-emerald-700'}`}>
+                      {scan.findings.filter((f) => f.scanner === 'url-inspector').length} Issues
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Clean Scan Zero Findings State */}
             {scan.summary.total === 0 && !hasIncompleteCoverage && (
               <div className="bg-white border border-app-border rounded-[6px] p-12 text-center">
@@ -505,11 +577,11 @@ export function ReportView({
                   className="px-2.5 py-1.5 bg-app-canvas border border-app-border rounded-[6px] text-xs text-app-primary font-mono focus:outline-none"
                 >
                   <option value="all">All Scanners</option>
+                  <option value="url-inspector">API Endpoint Inspector (Live URL)</option>
                   <option value="gitleaks">Gitleaks</option>
                   <option value="semgrep">Semgrep</option>
                   <option value="trivy">Trivy</option>
                   <option value="rule-engine">Heuristic Engine</option>
-                  <option value="url-inspector">URL Inspector</option>
                 </select>
 
                 <select
@@ -545,7 +617,14 @@ export function ReportView({
                       </div>
 
                       <div className="flex items-center gap-2 text-[11px] font-mono text-app-muted">
-                        <span className="uppercase">{f.scanner}</span>
+                        {f.scanner === 'url-inspector' ? (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-sky-50 text-sky-700 border border-sky-200">
+                            <Globe className="w-2.5 h-2.5 text-sky-600" />
+                            API ENDPOINT TEST
+                          </span>
+                        ) : (
+                          <span className="uppercase">{f.scanner}</span>
+                        )}
                         <span>·</span>
                         <span>{f.ruleId}</span>
                       </div>

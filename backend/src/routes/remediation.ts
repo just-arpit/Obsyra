@@ -28,7 +28,7 @@ remediationRouter.get('/:id/prompt', (req: Request, res: Response) => {
   const promptText = buildReadyToPastePrompt(scan.projectName, scan.findings);
 
   if (req.query.download === 'true') {
-    res.setHeader('Content-Disposition', `attachment; filename="vantascan-remediation-${scan.id}.md"`);
+    res.setHeader('Content-Disposition', `attachment; filename="obsyra-remediation-${scan.id}.md"`);
     res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
     return res.send(promptText);
   }

@@ -372,7 +372,7 @@ export const WorkspaceView: React.FC<WorkspaceViewProps> = ({
             <label htmlFor="consent" className="text-slate-300 leading-relaxed cursor-pointer select-none">
               <span className="font-semibold text-white">Authorization Certification: </span>
               I confirm and certify that I have explicit authorization to perform a passive security review on this deployed endpoint.
-              VantaScan enforces strict SSRF protections: private network addresses (RFC1918), localhost, and cloud metadata are blocked.
+              Obsyra enforces strict SSRF protections: private network addresses (RFC1918), localhost, and cloud metadata are blocked.
             </label>
           </div>
         )}

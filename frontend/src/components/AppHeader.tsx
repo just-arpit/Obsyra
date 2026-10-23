@@ -51,7 +51,7 @@ export function AppHeader({
             </svg>
           </div>
           <span className="font-semibold text-sm tracking-tight text-neutral-900 group-hover:text-black">
-            VantaScan
+            Obsyra
           </span>
         </div>
 

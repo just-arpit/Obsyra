@@ -103,7 +103,7 @@ export async function downloadGitHubRepoArchive(info: GitHubRepoInfo): Promise<{
       const response = await fetch(archiveUrl, {
         signal: controller.signal,
         headers: {
-          'User-Agent': 'VantaScan-Security-Auditor/1.0',
+          'User-Agent': 'Obsyra-Security-Auditor/1.0',
           'Accept': 'application/vnd.github+json, application/zip, application/octet-stream',
         },
         redirect: 'follow',

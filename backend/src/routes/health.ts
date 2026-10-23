@@ -7,7 +7,7 @@ export const healthRouter = Router();
 healthRouter.get('/health', async (req: Request, res: Response) => {
   res.json({
     status: 'ok',
-    service: 'VantaScan AI Security Reviewer Backend',
+    service: 'Obsyra AI Security Reviewer Backend',
     timestamp: new Date().toISOString(),
     uptimeSeconds: Math.floor(process.uptime()),
     ai: {

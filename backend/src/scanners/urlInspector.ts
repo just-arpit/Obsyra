@@ -131,7 +131,7 @@ export async function inspectAuthorizedUrl(
           method: 'GET',
           timeout: 10000,
           headers: {
-            'User-Agent': 'VantaScan-Security-Auditor/1.0 (+https://vantascan.dev/passive-audit)',
+            'User-Agent': 'Obsyra-Security-Auditor/1.0 (+https://obsyra.dev/passive-audit)',
             Accept: 'text/html,application/xhtml+xml,application/json,*/*',
           },
         },

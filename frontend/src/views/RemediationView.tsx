@@ -264,7 +264,7 @@ export const RemediationView: React.FC<RemediationViewProps> = ({ scan, showToas
               <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-              <span className="ml-2 font-mono text-[11px] text-slate-400">vantascan-repair-prompt.md</span>
+              <span className="ml-2 font-mono text-[11px] text-slate-400">obsyra-repair-prompt.md</span>
             </div>
             <span className="font-mono text-[10px] text-slate-500">Markdown Format • Ready for Claude/Gemini/Cursor</span>
           </div>

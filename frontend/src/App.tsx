@@ -224,7 +224,7 @@ export function App() {
         <footer className="border-t border-app-border bg-white py-5 text-center text-xs text-app-muted">
           <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-app-secondary">VantaScan DevSec Engine</span>
+              <span className="font-medium text-app-secondary">Obsyra DevSec Engine</span>
               <span>·</span>
               <span>Deterministic Multi-Scanner Verification & AI Remediation</span>
             </div>
