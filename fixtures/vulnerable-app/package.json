@@ -1,0 +1,10 @@
+{
+  "name": "ai-shop-vulnerable-demo",
+  "version": "1.0.0",
+  "description": "Synthetic deliberately vulnerable demo application for VantaScan security review",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

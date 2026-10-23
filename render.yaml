@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: vantascan
+    runtime: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: MAX_UPLOAD_SIZE_MB
+        value: 25
+      - key: MAX_EXTRACTED_FILES
+        value: 500
+      - key: MAX_EXTRACTED_BYTES_MB
+        value: 50
+      - key: SCAN_TIMEOUT_MS
+        value: 60000

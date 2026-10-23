@@ -1,0 +1,36 @@
+# Environment files containing sensitive credentials
+.env
+.env.local
+.env.*.local
+*.env
+
+# Dependency directories
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Build artifacts
+dist/
+build/
+backend/dist/
+frontend/dist/
+
+# Scan runtime & temporary files
+vantascan.sqlite
+vantascan.sqlite-journal
+vantascan.sqlite-shm
+vantascan.sqlite-wal
+scans/
+tmp/
+temp/
+*.zip
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db

@@ -1,0 +1,10 @@
+{
+  "name": "ai-shop-corrected-demo",
+  "version": "1.0.0",
+  "description": "Corrected version of demo application verified by VantaScan",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
