@@ -1,4 +1,4 @@
-FROM node:20-bookworm-slim
+FROM node:22-bookworm-slim
 
 # Set non-interactive debian frontend
 ENV DEBIAN_FRONTEND=noninteractive
@@ -50,5 +50,5 @@ ENV NODE_ENV=production
 # Expose default port (Render & Railway inject PORT environment variable dynamically)
 EXPOSE 4000
 
-# Start single-process server (Express serves /api routes + frontend static assets)
-CMD ["node", "backend/dist/server.js"]
+# Start single-process server with experimental sqlite enabled for node:sqlite
+CMD ["node", "--experimental-sqlite", "backend/dist/server.js"]
