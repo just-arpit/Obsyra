@@ -35,7 +35,7 @@ describe('Rescan Comparator and Fingerprint Stability', () => {
     confidence: 'high',
     filePath: 'src/routes/calc.ts',
     startLine: 45,
-    snippet: 'eval(userInput);',
+    snippet: 'mathParser.parse(userInput);',
     technicalExplanation: 'eval call detected',
     plainLanguageImpact: 'RCE',
     recommendedRemediation: 'Remove eval',

@@ -37,12 +37,12 @@ export function AppHeader({
     (readiness?.trivy?.installed ? 1 : 0);
 
   return (
-    <header className="sticky top-0 z-40 bg-white border-b border-neutral-200/80 h-14 px-6 flex items-center justify-between select-none">
-      <div className="flex items-center gap-6">
+    <header className="sticky top-0 z-40 bg-white border-b border-neutral-200/80 h-14 px-3 sm:px-6 flex items-center justify-between select-none">
+      <div className="flex items-center gap-2 sm:gap-6 min-w-0">
         {/* Brand identity */}
         <div
           onClick={() => onNavigate('/')}
-          className="flex items-center gap-2.5 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group shrink-0"
           title="Return to Landing Page"
         >
           <div className="w-6 h-6 bg-black rounded-[5px] flex items-center justify-center text-white shadow-xs">
@@ -50,16 +50,16 @@ export function AppHeader({
               <path d="M7.5 18L13.5 6M12.5 18L18.5 6" />
             </svg>
           </div>
-          <span className="font-semibold text-sm tracking-tight text-neutral-900 group-hover:text-black">
+          <span className="font-semibold text-sm tracking-tight text-neutral-900 group-hover:text-black hidden xs:inline">
             Obsyra
           </span>
         </div>
 
         {/* Primary Navigation */}
-        <nav className="flex items-center gap-1 text-xs">
+        <nav className="flex items-center gap-1 text-xs overflow-x-auto no-scrollbar">
           <button
             onClick={() => onNavigate('/scanner/new')}
-            className={`px-3 py-1.5 rounded-[6px] transition-colors font-medium ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-[6px] transition-colors font-medium whitespace-nowrap ${
               isNewScan
                 ? 'bg-neutral-100 text-neutral-900'
                 : 'text-neutral-500 hover:text-neutral-900'
@@ -70,7 +70,7 @@ export function AppHeader({
 
           <button
             onClick={() => onNavigate('/history')}
-            className={`px-3 py-1.5 rounded-[6px] transition-colors font-medium ${
+            className={`px-2.5 sm:px-3 py-1.5 rounded-[6px] transition-colors font-medium whitespace-nowrap ${
               isHistory
                 ? 'bg-neutral-100 text-neutral-900'
                 : 'text-neutral-500 hover:text-neutral-900'
@@ -82,7 +82,7 @@ export function AppHeader({
           {isReport && (
             <button
               onClick={() => activeScan && onNavigate(`/scans/${activeScan.id}`)}
-              className="px-3 py-1.5 rounded-[6px] bg-neutral-100 text-neutral-900 font-medium"
+              className="px-2.5 sm:px-3 py-1.5 rounded-[6px] bg-neutral-100 text-neutral-900 font-medium whitespace-nowrap"
             >
               Report
             </button>
@@ -91,7 +91,7 @@ export function AppHeader({
           {isCompare && (
             <button
               onClick={() => activeScan && onNavigate(`/scans/${activeScan.id}/compare`)}
-              className="px-3 py-1.5 rounded-[6px] bg-neutral-100 text-neutral-900 font-medium"
+              className="px-2.5 sm:px-3 py-1.5 rounded-[6px] bg-neutral-100 text-neutral-900 font-medium whitespace-nowrap"
             >
               Compare
             </button>
@@ -99,16 +99,18 @@ export function AppHeader({
         </nav>
       </div>
 
-      {/* Right Controls: Engine Readiness Pill & User Avatar */}
-      <div className="flex items-center gap-3">
+      {/* Right Controls: Engine Readiness Pill */}
+      <div className="flex items-center gap-2 shrink-0">
         {/* Engines status badge pill */}
         <div className="relative">
           <button
             onClick={() => setShowEngineDropdown((prev) => !prev)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-[6px] border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-mono text-neutral-700 transition-colors"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-[6px] border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-mono text-neutral-700 transition-colors cursor-pointer"
           >
             <span className={`w-2 h-2 rounded-full ${enginesInstalled > 0 ? 'bg-emerald-500' : 'bg-red-500'}`} />
-            <span>{enginesInstalled}/3 engines</span>
+            <span>
+              {enginesInstalled}/3<span className="hidden sm:inline"> engines</span>
+            </span>
             <ChevronDown className="w-3 h-3 text-neutral-400" />
           </button>
 
@@ -119,7 +121,7 @@ export function AppHeader({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute right-0 mt-2 w-64 bg-white border border-neutral-200 rounded-[8px] p-3 shadow-lg z-50 text-xs font-sans space-y-2.5"
+                className="absolute right-0 mt-2 w-64 max-w-[calc(100vw-1.5rem)] bg-white border border-neutral-200 rounded-[8px] p-3 shadow-lg z-50 text-xs font-sans space-y-2.5"
               >
                 <div className="text-[11px] font-mono uppercase text-neutral-400 font-semibold border-b border-neutral-100 pb-1.5">
                   Scanner Status

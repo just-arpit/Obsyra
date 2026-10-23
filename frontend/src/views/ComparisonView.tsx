@@ -160,19 +160,19 @@ export function ComparisonView({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-6xl mx-auto px-6 py-10 space-y-6"
+      className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-6"
     >
       {/* Header */}
-      <motion.div variants={itemVariants} className="bg-white border border-app-border rounded-[6px] p-6">
+      <motion.div variants={itemVariants} className="bg-white border border-app-border rounded-[6px] p-4 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-app-border gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <span className="font-mono text-xs uppercase text-app-muted">VERIFICATION DIFF</span>
-              <span className="font-mono text-xs text-app-primary bg-app-canvas px-2 py-0.5 rounded border border-app-border">
+              <span className="font-mono text-xs text-app-primary bg-app-canvas px-2 py-0.5 rounded border border-app-border break-all max-w-full">
                 Baseline: {scan.projectName} ({scan.id})
               </span>
             </div>
-            <h1 className="text-2xl font-semibold text-app-primary tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-semibold text-app-primary tracking-tight">
               Rescan Fix Verification
             </h1>
             <p className="text-xs text-app-secondary mt-1">
@@ -186,7 +186,7 @@ export function ComparisonView({
               whileTap={{ scale: 0.98 }}
               onClick={handle1ClickCorrectedDemo}
               disabled={isRescanning}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-app-primary text-white hover:bg-neutral-800 disabled:opacity-50 text-xs font-medium rounded-[6px] transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-app-primary text-white hover:bg-neutral-800 disabled:opacity-50 text-xs font-medium rounded-[6px] transition-colors shadow-sm w-full sm:w-auto shrink-0"
             >
               {isRescanning ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
               <span>Run Sample Patched Rescan</span>
@@ -196,49 +196,49 @@ export function ComparisonView({
 
         {/* Comparison Metrics */}
         {comparison && (
-          <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 font-mono">
+          <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 font-mono">
             <motion.div
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="p-3.5 bg-app-success-bg border border-app-success-border rounded-[6px] cursor-default"
+              className="p-3 sm:p-3.5 bg-app-success-bg border border-app-success-border rounded-[6px] cursor-default"
             >
               <div className="flex items-center gap-1.5 text-xs text-app-success font-semibold mb-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
                 <span>RESOLVED</span>
               </div>
-              <span className="text-2xl font-bold text-app-success">{comparison.summary.resolvedCount}</span>
+              <span className="text-xl sm:text-2xl font-bold text-app-success">{comparison.summary.resolvedCount}</span>
             </motion.div>
 
             <motion.div
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="p-3.5 bg-neutral-100 border border-neutral-300 rounded-[6px] cursor-default"
+              className="p-3 sm:p-3.5 bg-neutral-100 border border-neutral-300 rounded-[6px] cursor-default"
             >
               <div className="flex items-center gap-1.5 text-xs text-neutral-700 font-semibold mb-1">
-                <AlertTriangle className="w-3.5 h-3.5" />
+                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                 <span>STILL PRESENT</span>
               </div>
-              <span className="text-2xl font-bold text-neutral-800">{comparison.summary.stillPresentCount}</span>
+              <span className="text-xl sm:text-2xl font-bold text-neutral-800">{comparison.summary.stillPresentCount}</span>
             </motion.div>
 
             <motion.div
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="p-3.5 bg-app-warning-bg border border-app-warning-border rounded-[6px] cursor-default"
+              className="p-3 sm:p-3.5 bg-app-warning-bg border border-app-warning-border rounded-[6px] cursor-default"
             >
               <div className="flex items-center gap-1.5 text-xs text-app-warning font-semibold mb-1">
-                <ShieldAlert className="w-3.5 h-3.5" />
+                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
                 <span>NEW FINDINGS</span>
               </div>
-              <span className="text-2xl font-bold text-app-warning">{comparison.summary.newCount}</span>
+              <span className="text-xl sm:text-2xl font-bold text-app-warning">{comparison.summary.newCount}</span>
             </motion.div>
 
             <motion.div
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
-              className="p-3.5 bg-app-info-bg border border-app-info-border rounded-[6px] cursor-default"
+              className="p-3 sm:p-3.5 bg-app-info-bg border border-app-info-border rounded-[6px] cursor-default"
             >
               <div className="flex items-center gap-1.5 text-xs text-app-info font-semibold mb-1">
-                <HelpCircle className="w-3.5 h-3.5" />
+                <HelpCircle className="w-3.5 h-3.5 shrink-0" />
                 <span>INCONCLUSIVE</span>
               </div>
-              <span className="text-2xl font-bold text-app-info">{comparison.summary.inconclusiveCount}</span>
+              <span className="text-xl sm:text-2xl font-bold text-app-info">{comparison.summary.inconclusiveCount}</span>
             </motion.div>
           </div>
         )}
@@ -321,14 +321,14 @@ export function ComparisonView({
       {comparison && (
         <motion.div variants={itemVariants} className="space-y-4">
           {/* Status Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-app-border">
+          <div className="flex items-center gap-2 pb-2 border-b border-app-border overflow-x-auto no-scrollbar whitespace-nowrap">
             {['all', 'resolved', 'still_present', 'new', 'inconclusive'].map((status) => (
               <motion.button
                 key={status}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedStatusFilter(status)}
-                className={`px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium transition-colors shrink-0 ${
                   selectedStatusFilter === status
                     ? 'bg-app-primary text-white shadow-xs'
                     : 'bg-white border border-app-border text-app-secondary hover:text-app-primary'
@@ -349,42 +349,42 @@ export function ComparisonView({
                 <motion.div
                   key={item.id}
                   whileHover={{ y: -2, transition: { duration: 0.15 } }}
-                  className="bg-white border border-app-border hover:border-app-secondary rounded-[6px] p-5 space-y-3 transition-all hover:shadow-app-card"
+                  className="bg-white border border-app-border hover:border-app-secondary rounded-[6px] p-4 sm:p-5 space-y-3 transition-all hover:shadow-app-card"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-app-border gap-2">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex flex-wrap items-center gap-2">
                       {item.status === 'resolved' && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-success-bg text-app-success border border-app-success-border">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-success-bg text-app-success border border-app-success-border shrink-0">
                           RESOLVED
                         </span>
                       )}
                       {item.status === 'still_present' && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-neutral-100 text-neutral-800 border border-neutral-300">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-neutral-100 text-neutral-800 border border-neutral-300 shrink-0">
                           STILL PRESENT
                         </span>
                       )}
                       {item.status === 'new' && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-warning-bg text-app-warning border border-app-warning-border">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-warning-bg text-app-warning border border-app-warning-border shrink-0">
                           NEW
                         </span>
                       )}
                       {item.status === 'inconclusive' && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-info-bg text-app-info border border-app-info-border">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-app-info-bg text-app-info border border-app-info-border shrink-0">
                           INCONCLUSIVE
                         </span>
                       )}
-                      <span className="font-semibold text-xs text-app-primary">{item.title}</span>
+                      <span className="font-semibold text-xs text-app-primary break-words">{item.title}</span>
                     </div>
 
-                    <div className="text-[11px] font-mono text-app-muted">
+                    <div className="text-[11px] font-mono text-app-muted shrink-0">
                       <span>{item.category}</span>
                       <span> · </span>
                       <span className="uppercase">{item.scanner}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 font-mono text-xs text-app-secondary">
-                    <FileCode className="w-3.5 h-3.5 text-app-muted" />
+                  <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-app-secondary break-all">
+                    <FileCode className="w-3.5 h-3.5 text-app-muted shrink-0" />
                     <span>{item.filePath}</span>
                     {item.startLine && <span className="text-app-muted">line {item.startLine}</span>}
                   </div>

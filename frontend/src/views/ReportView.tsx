@@ -179,13 +179,13 @@ export function ReportView({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-6xl mx-auto px-6 py-10"
+      className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10"
     >
       {/* Top Header Card */}
-      <motion.div variants={itemVariants} className="bg-white border border-app-border rounded-[6px] p-6 mb-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-app-border gap-4">
+      <motion.div variants={itemVariants} className="bg-white border border-app-border rounded-[6px] p-4 sm:p-6 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between pb-5 sm:pb-6 border-b border-app-border gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
               <span className="font-mono text-xs uppercase text-app-muted">SCAN REPORT</span>
               <span className="font-mono text-xs text-app-primary bg-app-canvas px-2 py-0.5 rounded border border-app-border">
                 {scan.id}
@@ -196,35 +196,35 @@ export function ReportView({
                 </span>
               )}
             </div>
-            <h1 className="text-2xl font-semibold text-app-primary tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-semibold text-app-primary tracking-tight break-words">
               {scan.projectName}
             </h1>
             <p className="text-xs text-app-secondary font-mono mt-1">
               {scan.fileCount} source files · {(scan.totalSizeBytes / 1024).toFixed(1)} KB · Analyzed on {new Date(scan.createdAt).toLocaleString()}
             </p>
             {scan.targetUrl && (
-              <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-sky-50 border border-sky-200 text-xs font-mono text-sky-800">
+              <div className="mt-2.5 inline-flex flex-wrap items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-sky-50 border border-sky-200 text-xs font-mono text-sky-800 max-w-full">
                 <Globe className="w-3.5 h-3.5 text-sky-600 shrink-0" />
                 <span>Audited Live Target / API:</span>
                 <a
                   href={scan.targetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold underline hover:text-sky-950 inline-flex items-center gap-1"
+                  className="font-semibold underline hover:text-sky-950 inline-flex items-center gap-1 break-all"
                 >
                   {scan.targetUrl}
-                  <ExternalLink className="w-3 h-3" />
+                  <ExternalLink className="w-3 h-3 shrink-0" />
                 </a>
               </div>
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2">
             <motion.button
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onInitiateRescan(scan.id)}
-              className="inline-flex items-center gap-1.5 bg-app-primary text-white hover:bg-neutral-800 text-xs font-medium px-4 py-2 rounded-[6px] transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 bg-app-primary text-white hover:bg-neutral-800 text-xs font-medium px-3.5 py-2 rounded-[6px] transition-colors shadow-sm flex-1 sm:flex-initial"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Rescan & Verify Fixes</span>
@@ -235,7 +235,7 @@ export function ReportView({
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onNavigateToCompare(scan.id)}
-                className="inline-flex items-center gap-1.5 bg-white border border-app-border hover:border-app-secondary text-app-primary text-xs font-medium px-3.5 py-2 rounded-[6px] transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 bg-white border border-app-border hover:border-app-secondary text-app-primary text-xs font-medium px-3 py-2 rounded-[6px] transition-colors flex-1 sm:flex-initial"
               >
                 <GitCompare className="w-3.5 h-3.5" />
                 <span>View Baseline Diff</span>
@@ -246,7 +246,7 @@ export function ReportView({
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleLoadRemediation}
-              className="inline-flex items-center gap-1.5 bg-white border border-app-border hover:border-app-secondary text-app-primary text-xs font-medium px-3.5 py-2 rounded-[6px] transition-colors"
+              className="inline-flex items-center justify-center gap-1.5 bg-white border border-app-border hover:border-app-secondary text-app-primary text-xs font-medium px-3 py-2 rounded-[6px] transition-colors flex-1 sm:flex-initial"
             >
               <Sparkles className="w-3.5 h-3.5 text-app-primary" />
               <span>AI Repair Prompt</span>
@@ -255,7 +255,7 @@ export function ReportView({
         </div>
 
         {/* Severity Metrics Strip */}
-        <div className="pt-6 grid grid-cols-2 sm:grid-cols-6 gap-3">
+        <div className="pt-5 sm:pt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
           <motion.div
             whileHover={{ y: -3, transition: { duration: 0.2 } }}
             className="p-3 bg-app-canvas border border-app-border rounded-[6px] hover:border-app-secondary transition-colors cursor-default"
@@ -321,10 +321,10 @@ export function ReportView({
       )}
 
       {/* Navigation Sub-Tabs */}
-      <motion.div variants={itemVariants} className="flex border-b border-app-border mb-6">
+      <motion.div variants={itemVariants} className="flex border-b border-app-border mb-6 overflow-x-auto no-scrollbar whitespace-nowrap">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`relative py-2.5 px-4 text-xs font-medium transition-colors ${
+          className={`relative py-2.5 px-3 sm:px-4 text-xs font-medium transition-colors shrink-0 ${
             activeTab === 'overview'
               ? 'text-app-primary font-semibold'
               : 'text-app-secondary hover:text-app-primary'
@@ -341,7 +341,7 @@ export function ReportView({
         </button>
         <button
           onClick={() => setActiveTab('findings')}
-          className={`relative py-2.5 px-4 text-xs font-medium transition-colors flex items-center gap-1.5 ${
+          className={`relative py-2.5 px-3 sm:px-4 text-xs font-medium transition-colors flex items-center gap-1.5 shrink-0 ${
             activeTab === 'findings'
               ? 'text-app-primary font-semibold'
               : 'text-app-secondary hover:text-app-primary'
@@ -361,7 +361,7 @@ export function ReportView({
         </button>
         <button
           onClick={handleLoadRemediation}
-          className={`relative py-2.5 px-4 text-xs font-medium transition-colors flex items-center gap-1.5 ${
+          className={`relative py-2.5 px-3 sm:px-4 text-xs font-medium transition-colors flex items-center gap-1.5 shrink-0 ${
             activeTab === 'remediation'
               ? 'text-app-primary font-semibold'
               : 'text-app-secondary hover:text-app-primary'
@@ -671,8 +671,8 @@ export function ReportView({
             {/* Executive Summary */}
             {remediationPlan ? (
               <>
-                <div className="bg-white border border-app-border rounded-[6px] p-6">
-                  <div className="flex items-center justify-between pb-4 border-b border-app-border mb-4">
+                <div className="bg-white border border-app-border rounded-[6px] p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-app-border mb-4 gap-3">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-app-primary" />
                       <h2 className="text-sm font-semibold text-app-primary uppercase tracking-tight">
@@ -680,12 +680,12 @@ export function ReportView({
                       </h2>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-mono">
+                    <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
                       <span className="text-app-muted">Provider: </span>
                       <span className="px-2 py-0.5 rounded bg-app-canvas border border-app-border text-app-primary font-semibold">
                         {remediationPlan.generatedBy === 'gemini' ? 'Google Gemini AI' : 'Deterministic Engine'}
                       </span>
-                      <span className="text-app-muted ml-2">Risk Score: </span>
+                      <span className="text-app-muted sm:ml-2">Risk Score: </span>
                       <span className="px-2 py-0.5 rounded bg-red-100 text-red-800 font-bold">
                         {remediationPlan.riskScore}/100
                       </span>
@@ -700,13 +700,13 @@ export function ReportView({
                   {remediationPlan.credentialRotations.length > 0 && (
                     <div className="mt-4 p-4 rounded-[6px] bg-red-50 border border-red-200">
                       <div className="text-xs font-bold text-red-900 mb-2 flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4 text-red-600" />
+                        <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
                         <span>MANDATORY CREDENTIAL REVOCATION DIRECTIVES</span>
                       </div>
                       <ul className="space-y-2 text-xs text-red-800 list-disc list-inside">
                         {remediationPlan.credentialRotations.map((cr, idx) => (
                           <li key={idx}>
-                            <strong>{cr.credentialType}</strong> detected in <code className="font-mono text-red-950">{cr.detectedFile}</code>:
+                            <strong>{cr.credentialType}</strong> detected in <code className="font-mono text-red-950 break-all">{cr.detectedFile}</code>:
                             {' '}{cr.immediateActions.join(' · ')}
                           </li>
                         ))}
@@ -716,11 +716,11 @@ export function ReportView({
                 </div>
 
                 {/* Ready to Paste Coding Agent Prompt */}
-                <div className="bg-white border border-app-border rounded-[6px] p-6">
+                <div className="bg-white border border-app-border rounded-[6px] p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-app-border gap-3 mb-4">
                     <div>
                       <h3 className="text-sm font-semibold text-app-primary flex items-center gap-2">
-                        <Terminal className="w-4 h-4 text-app-primary" />
+                        <Terminal className="w-4 h-4 text-app-primary shrink-0" />
                         <span>Ready-to-Paste Coding Agent Repair Prompt</span>
                       </h3>
                       <p className="text-xs text-app-muted mt-0.5">
@@ -728,12 +728,12 @@ export function ReportView({
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                       <motion.button
                         whileHover={{ scale: 1.02, y: -1 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={handleCopyPrompt}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-app-primary text-white hover:bg-neutral-800 rounded-[6px] text-xs font-medium transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-app-primary text-white hover:bg-neutral-800 rounded-[6px] text-xs font-medium transition-colors flex-1 sm:flex-initial"
                       >
                         {copiedPrompt ? (
                           <>
@@ -752,7 +752,7 @@ export function ReportView({
                         whileHover={{ scale: 1.02, y: -1 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={handleDownloadPrompt}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-app-border hover:border-app-secondary rounded-[6px] text-xs font-medium text-app-primary transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-white border border-app-border hover:border-app-secondary rounded-[6px] text-xs font-medium text-app-primary transition-colors flex-1 sm:flex-initial"
                       >
                         <Download className="w-3.5 h-3.5" />
                         <span>Export .md</span>
@@ -760,15 +760,15 @@ export function ReportView({
                     </div>
                   </div>
 
-                  <div className="bg-app-canvas border border-app-border rounded-[6px] p-4 overflow-x-auto max-h-[460px] overflow-y-auto">
-                    <pre className="text-xs font-mono text-app-body leading-relaxed whitespace-pre-wrap select-all">
+                  <div className="bg-app-canvas border border-app-border rounded-[6px] p-3 sm:p-4 overflow-x-auto max-h-[460px] overflow-y-auto">
+                    <pre className="text-xs font-mono text-app-body leading-relaxed whitespace-pre-wrap select-all break-words">
                       {remediationPlan.readyToPasteRepairPrompt}
                     </pre>
                   </div>
                 </div>
               </>
             ) : (
-              <div className="bg-white border border-app-border rounded-[6px] p-12 text-center">
+              <div className="bg-white border border-app-border rounded-[6px] p-6 sm:p-12 text-center">
                 <Sparkles className="w-10 h-10 text-app-secondary mx-auto mb-3 animate-pulse" />
                 <h3 className="text-sm font-semibold text-app-primary mb-1">
                   {isLoadingRemediation ? 'Generating AI Remediation Plan...' : 'Generate AI Remediation Guidance'}

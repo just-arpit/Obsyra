@@ -17,17 +17,66 @@ describe('Secret Redaction Engine', () => {
     expect(clean).toContain('[REDACTED_AWS_KEY_ID]');
   });
 
-  it('should redact generic passwords and secrets', () => {
-    const raw = 'const password = "SuperSecretPassword123!";';
-    const clean = redactText(raw);
-    expect(clean).not.toContain('SuperSecretPassword123!');
-    expect(clean).toContain('[REDACTED_SECRET]');
+  it('should redact generic passwords and secrets in JS, JSON, ENV, and YAML formats', () => {
+    // JS assignment
+    const rawJs = 'const password = "SuperSecretPassword123!";';
+    expect(redactText(rawJs)).toContain('[REDACTED_SECRET]');
+    expect(redactText(rawJs)).not.toContain('SuperSecretPassword123!');
+
+    // JSON format with quoted property name
+    const rawJson = '{"password": "SuperSecretPassword123!", "api_key": "secretTokenABC123"}';
+    const cleanJson = redactText(rawJson);
+    expect(cleanJson).toContain('[REDACTED_SECRET]');
+    expect(cleanJson).not.toContain('SuperSecretPassword123!');
+    expect(cleanJson).not.toContain('secretTokenABC123');
+
+    // .env format without quotes
+    const rawEnv = 'PASSWORD=SuperSecretPassword123!\nAPI_KEY=mySecretApiKey987';
+    const cleanEnv = redactText(rawEnv);
+    expect(cleanEnv).toContain('PASSWORD=[REDACTED_SECRET]');
+    expect(cleanEnv).toContain('API_KEY=[REDACTED_SECRET]');
+    expect(cleanEnv).not.toContain('SuperSecretPassword123!');
+
+    // YAML format
+    const rawYaml = 'password: SuperSecretPassword123!';
+    expect(redactText(rawYaml)).toContain('password: [REDACTED_SECRET]');
+    expect(redactText(rawYaml)).not.toContain('SuperSecretPassword123!');
   });
 
-  it('should redact JWT tokens', () => {
-    const raw = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+  it('should redact AWS Secret Access Keys in config and JSON formats', () => {
+    const raw = 'AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"';
     const clean = redactText(raw);
-    expect(clean).not.toContain('SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
+    expect(clean).toContain('[REDACTED_AWS_SECRET_KEY]');
+    expect(clean).not.toContain('wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY');
+
+    const rawJson = '{"AWS_SECRET_ACCESS_KEY": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"}';
+    const cleanJson = redactText(rawJson);
+    expect(cleanJson).toContain('[REDACTED_AWS_SECRET_KEY]');
+    expect(cleanJson).not.toContain('wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY');
+  });
+
+  it('should redact OpenAI and Anthropic API keys', () => {
+    const rawOpenAI = 'const key = "sk-proj-abc1234567890abcdefghijklmnopqrstuvwxyz123456";';
+    const cleanOpenAI = redactText(rawOpenAI);
+    expect(cleanOpenAI).toContain('[REDACTED_OPENAI_API_KEY]');
+    expect(cleanOpenAI).not.toContain('sk-proj-abc1234567890abcdefghijklmnopqrstuvwxyz123456');
+
+    const rawAnthropic = 'const ant = "sk-ant-api03-abcdefghijklmnopqrstuvwxyz1234567890";';
+    const cleanAnthropic = redactText(rawAnthropic);
+    expect(cleanAnthropic).toContain('[REDACTED_ANTHROPIC_API_KEY]');
+    expect(cleanAnthropic).not.toContain('sk-ant-api03-abcdefghijklmnopqrstuvwxyz1234567890');
+  });
+
+  it('should redact JWT tokens and standalone Bearer tokens', () => {
+    const rawJwt = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    const cleanJwt = redactText(rawJwt);
+    expect(cleanJwt).not.toContain('SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
+    expect(cleanJwt).toContain('[REDACTED_JWT_TOKEN]');
+
+    const rawBearer = 'Bearer someRandomAuthTokenString12345';
+    const cleanBearer = redactText(rawBearer);
+    expect(cleanBearer).toContain('[REDACTED_BEARER_TOKEN]');
+    expect(cleanBearer).not.toContain('someRandomAuthTokenString12345');
   });
 
   it('should redact database credentials in URIs', () => {

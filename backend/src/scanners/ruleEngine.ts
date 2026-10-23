@@ -148,6 +148,14 @@ export async function runRuleEngineScan(
         continue;
       }
 
+      // Skip test suites and spec files for execution/injection heuristic rules
+      if (
+        (rule.id === 'SEC-INJ-001' || rule.category === 'Injection / XSS') &&
+        /(?:^|\/)(?:tests?|__tests__|specs?)\/|\.(?:test|spec)\.[a-z]+$/i.test(relFile)
+      ) {
+        continue;
+      }
+
       // Check pattern
       if (rule.pattern.test(content)) {
         // Find line number

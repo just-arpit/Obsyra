@@ -127,7 +127,7 @@ const itemVariants = {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-4xl mx-auto px-6 py-10"
+      className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10"
     >
       {/* Animated Live Progress Bar */}
       <motion.div variants={itemVariants} className="w-full bg-neutral-200/80 h-1.5 rounded-full overflow-hidden mb-6">
@@ -142,20 +142,20 @@ const itemVariants = {
       {/* Header telemetry info */}
       <motion.div
         variants={itemVariants}
-        className="bg-white border border-app-border rounded-[6px] p-6 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+        className="bg-white border border-app-border rounded-[6px] p-4 sm:p-6 mb-6 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-app-border gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
               <span className="font-mono text-xs text-app-muted uppercase">SCAN EXECUTION</span>
               <span className="font-mono text-xs text-app-primary font-medium">{scanId}</span>
             </div>
-            <h1 className="text-xl font-semibold text-app-primary tracking-tight">
+            <h1 className="text-xl font-semibold text-app-primary tracking-tight break-all">
               {state?.projectName || 'Analyzing Project Workspace'}
             </h1>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 self-start sm:self-center">
             <div className="px-3 py-1.5 rounded-[6px] bg-app-canvas border border-app-border font-mono text-xs">
               <span className="text-app-muted">Elapsed: </span>
               <span className="font-semibold text-app-primary">
@@ -174,11 +174,11 @@ const itemVariants = {
 
         {/* Status Callout */}
         <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-start sm:items-center gap-2.5">
             {isCompleted ? (
-              <CheckCircle2 className="w-5 h-5 text-app-success" />
+              <CheckCircle2 className="w-5 h-5 text-app-success shrink-0 mt-0.5 sm:mt-0" />
             ) : (
-              <Loader2 className="w-5 h-5 text-app-primary animate-spin" />
+              <Loader2 className="w-5 h-5 text-app-primary animate-spin shrink-0 mt-0.5 sm:mt-0" />
             )}
             <div>
               <div className="text-xs font-semibold text-app-primary">
@@ -201,7 +201,7 @@ const itemVariants = {
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => onOpenReport(scanId)}
-              className="inline-flex items-center gap-2 bg-app-primary text-white hover:bg-neutral-800 text-xs font-medium px-4 py-2 rounded-[6px] shadow-sm transition-all whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 bg-app-primary text-white hover:bg-neutral-800 text-xs font-medium px-4 py-2 rounded-[6px] shadow-sm transition-all whitespace-nowrap w-full sm:w-auto"
             >
               <span>View Security Report</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -248,12 +248,12 @@ const itemVariants = {
           <motion.div
             key={stage.id}
             whileHover={{ x: 2, transition: { duration: 0.15 } }}
-            className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-app-hover/50 transition-colors"
+            className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-app-hover/50 transition-colors"
           >
             <div className="flex items-start gap-3">
               <div className="mt-0.5">{getStageIcon(stage.status)}</div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="text-sm font-medium text-app-primary">{stage.name}</span>
                   <span className="text-xs text-app-muted font-mono">{stage.label}</span>
                 </div>
@@ -268,7 +268,7 @@ const itemVariants = {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 self-end sm:self-center font-mono text-xs">
+            <div className="flex items-center gap-2.5 sm:gap-3 self-end sm:self-center font-mono text-xs">
               {stage.durationMs !== undefined && (
                 <span className="text-app-muted">{stage.durationMs}ms</span>
               )}
@@ -284,10 +284,10 @@ const itemVariants = {
       </motion.div>
 
       {/* Bottom Actions */}
-      <motion.div variants={itemVariants} className="mt-6 flex items-center justify-between">
+      <motion.div variants={itemVariants} className="mt-6 flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
         <button
           onClick={onNavigateToIntake}
-          className="text-xs text-app-secondary hover:text-app-primary underline"
+          className="text-xs text-app-secondary hover:text-app-primary underline py-1"
         >
           Cancel or Submit Another Scan
         </button>
@@ -297,7 +297,7 @@ const itemVariants = {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onOpenReport(scanId)}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-app-primary hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-app-primary hover:underline py-1"
           >
             <span>Proceed to Report Overview</span>
             <ArrowRight className="w-3.5 h-3.5" />

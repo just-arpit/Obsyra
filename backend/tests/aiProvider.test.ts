@@ -35,7 +35,7 @@ describe('AI Remediation Engine and Prompt Generator', () => {
       confidence: 'high',
       filePath: 'src/calculator.ts',
       startLine: 18,
-      snippet: 'eval(req.query.expression);',
+      snippet: 'mathParser.parse(req.query.expression);',
       technicalExplanation: 'Unsanitized input passed to eval',
       plainLanguageImpact: 'Remote Code Execution',
       recommendedRemediation: 'Parse mathematical expressions with safe AST parser',

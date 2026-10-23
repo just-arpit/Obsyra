@@ -186,13 +186,13 @@ export function IntakeView({
   const canSubmit = intakeMethod === 'zip' ? Boolean(selectedFile) : Boolean(repoUrl.trim());
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
       {/* Page Title & Philosophy from ss2 */}
-      <div className="mb-8">
-        <h1 className="text-[32px] sm:text-[34px] font-semibold tracking-tight text-neutral-900 leading-tight">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-[34px] font-semibold tracking-tight text-neutral-900 leading-tight">
           Let&apos;s secure your code.
         </h1>
-        <p className="text-sm text-neutral-500 mt-2 max-w-2xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-500 mt-2 max-w-2xl leading-relaxed">
           Bring your project into Obsyra. We&apos;ll inspect the source, identify security risks, and help you fix what matters.
         </p>
       </div>
@@ -218,9 +218,9 @@ export function IntakeView({
       {/* 2-Column Grid Split Layout matching ss2 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Main Intake Card (8 cols) */}
-        <div className="lg:col-span-8 bg-white border border-neutral-200/90 rounded-[10px] p-6 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <div className="lg:col-span-8 bg-white border border-neutral-200/90 rounded-[10px] p-4 sm:p-7 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
           {/* Card Header: SOURCE label and Segmented Pill Tabs */}
-          <div className="flex items-center justify-between pb-2">
+          <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between pb-2 gap-2">
             <span className="text-[11px] font-mono tracking-wider uppercase text-neutral-400 font-semibold">
               SOURCE
             </span>
@@ -363,7 +363,7 @@ export function IntakeView({
               </div>
 
               {/* Card Footer: Status text & Start scan button */}
-              <div className="pt-6 border-t border-neutral-100 flex items-center justify-between">
+              <div className="pt-6 border-t border-neutral-100 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3">
                 <span className="text-xs text-neutral-400">
                   {selectedFile
                     ? `Archive ready to scan (${(selectedFile.size / 1024).toFixed(1)} KB)`
@@ -375,7 +375,7 @@ export function IntakeView({
                   whileTap={canSubmit ? { scale: 0.98 } : undefined}
                   type="submit"
                   disabled={!canSubmit || isSubmitting}
-                  className={`px-4 py-2 rounded-[6px] text-xs font-medium transition-colors ${
+                  className={`w-full sm:w-auto px-4 py-2 rounded-[6px] text-xs font-medium transition-colors text-center justify-center flex items-center ${
                     canSubmit
                       ? 'bg-neutral-900 text-white hover:bg-neutral-800 shadow-sm cursor-pointer'
                       : 'bg-[#9ca3af] text-white cursor-not-allowed'
@@ -501,7 +501,7 @@ export function IntakeView({
               </div>
 
               {/* Card Footer */}
-              <div className="pt-6 border-t border-neutral-100 flex items-center justify-between">
+              <div className="pt-6 border-t border-neutral-100 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-3">
                 <span className="text-xs text-neutral-400">
                   {repoUrl.trim() ? 'Repository ready to clone & audit.' : 'Enter a public GitHub repository.'}
                 </span>
@@ -511,7 +511,7 @@ export function IntakeView({
                   whileTap={canSubmit ? { scale: 0.98 } : undefined}
                   type="submit"
                   disabled={!canSubmit || isSubmitting}
-                  className={`px-4 py-2 rounded-[6px] text-xs font-medium transition-colors ${
+                  className={`w-full sm:w-auto px-4 py-2 rounded-[6px] text-xs font-medium transition-colors text-center justify-center flex items-center ${
                     canSubmit
                       ? 'bg-neutral-900 text-white hover:bg-neutral-800 shadow-sm cursor-pointer'
                       : 'bg-[#9ca3af] text-white cursor-not-allowed'

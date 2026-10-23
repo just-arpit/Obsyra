@@ -22,8 +22,20 @@ const REDACTION_PATTERNS: RedactionPattern[] = [
   // AWS Secret Access Key
   {
     name: 'AWS Secret Key',
-    regex: /(?:aws_secret_access_key|aws_secret_key|secret_key)\s*[:=]\s*["']?([A-Za-z0-9/+=]{40})["']?/gi,
-    replacement: (match, p1) => match.replace(p1, '[REDACTED_AWS_SECRET_KEY]'),
+    regex: /((?:["']?(?:aws_secret_access_key|aws_secret_key|secret_key)["']?)\s*[:=]\s*["']?)([A-Za-z0-9/+=]{40})(["']?)/gi,
+    replacement: '$1[REDACTED_AWS_SECRET_KEY]$3',
+  },
+  // Anthropic API Keys (must precede generic sk- pattern)
+  {
+    name: 'Anthropic Claude API Key',
+    regex: /\b(sk-ant-[A-Za-z0-9_-]{20,128})\b/g,
+    replacement: '[REDACTED_ANTHROPIC_API_KEY]',
+  },
+  // OpenAI API Keys
+  {
+    name: 'OpenAI API Key',
+    regex: /\b(sk-(?!ant-)[A-Za-z0-9_-]{20,64}|sk-proj-[A-Za-z0-9_-]{20,128})\b/g,
+    replacement: '[REDACTED_OPENAI_API_KEY]',
   },
   // GitHub Tokens
   {
@@ -55,16 +67,16 @@ const REDACTION_PATTERNS: RedactionPattern[] = [
     regex: /-----BEGIN (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----/g,
     replacement: '-----BEGIN PRIVATE KEY-----\n[REDACTED_PRIVATE_KEY_BODY]\n-----END PRIVATE KEY-----',
   },
-  // Generic password / secret assignment patterns (e.g., password="supersecret", api_secret='xyz')
+  // Generic password / secret assignment patterns (handles JSON quotes, .env unquoted, YAML)
   {
     name: 'Assigned Secret / Password',
-    regex: /((?:password|passwd|secret|api_key|apikey|auth_token|client_secret|private_key)\s*[:=]\s*["'])([^"'\r\n\t]{6,})(["'])/gi,
+    regex: /((?:["']?(?:password|passwd|secret|api_key|apikey|auth_token|client_secret|private_key)["']?)\s*[:=]\s*["']?)([^"'\r\n\t\s,;]{6,})(["']?)/gi,
     replacement: '$1[REDACTED_SECRET]$3',
   },
-  // Bearer tokens
+  // Bearer tokens (with or without Authorization: prefix)
   {
     name: 'Authorization Bearer Token',
-    regex: /(Authorization:\s*Bearer\s+)[A-Za-z0-9-._~+/]+=*/gi,
+    regex: /(?:Authorization:\s*)?(Bearer\s+)[A-Za-z0-9-._~+/]+=*/gi,
     replacement: '$1[REDACTED_BEARER_TOKEN]',
   },
   // Database connection URIs containing credentials: postgres://user:password@host

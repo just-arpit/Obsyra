@@ -47,7 +47,7 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm select-text"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/40 backdrop-blur-sm select-text"
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -55,11 +55,11 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-3xl max-h-[90vh] bg-white border border-app-border rounded-[6px] shadow-app-elevated flex flex-col overflow-hidden"
+        className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[90vh] bg-white border border-app-border rounded-[6px] shadow-app-elevated flex flex-col overflow-hidden"
       >
         {/* Modal Header */}
-        <div className="flex items-start justify-between p-6 border-b border-app-border bg-app-canvas">
-          <div className="space-y-2 pr-6">
+        <div className="flex items-start justify-between p-4 sm:p-6 border-b border-app-border bg-app-canvas gap-3">
+          <div className="space-y-2 pr-2 sm:pr-6 min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <SeverityBadge severity={finding.severity} />
               <span className="text-xs font-mono text-app-secondary px-2 py-0.5 rounded bg-white border border-app-border">
@@ -70,13 +70,13 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
               </span>
             </div>
 
-            <h2 className="text-lg font-semibold text-app-primary tracking-tight">
+            <h2 className="text-base sm:text-lg font-semibold text-app-primary tracking-tight break-words">
               {finding.title}
             </h2>
 
-            <div className="flex items-center gap-3 text-xs text-app-secondary font-mono">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-app-secondary font-mono break-all">
               <div className="flex items-center gap-1.5">
-                <FileCode className="w-3.5 h-3.5 text-app-muted" />
+                <FileCode className="w-3.5 h-3.5 text-app-muted shrink-0" />
                 <span>
                   {finding.filePath}
                   {finding.startLine ? `:${finding.startLine}${finding.endLine && finding.endLine !== finding.startLine ? `–${finding.endLine}` : ''}` : ''}
@@ -85,7 +85,7 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
 
               <button
                 onClick={handleCopyLocation}
-                className="text-[11px] text-app-muted hover:text-app-primary underline inline-flex items-center gap-1"
+                className="text-[11px] text-app-muted hover:text-app-primary underline inline-flex items-center gap-1 shrink-0"
                 title="Copy file path"
               >
                 {copiedFile ? <Check className="w-3 h-3 text-app-success" /> : <Copy className="w-3 h-3" />}
@@ -96,7 +96,7 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
 
           <button
             onClick={onClose}
-            className="p-1 rounded-[6px] text-app-muted hover:text-app-primary hover:bg-app-hover transition-colors shrink-0"
+            className="p-1.5 rounded-[6px] text-app-muted hover:text-app-primary hover:bg-app-hover transition-colors shrink-0"
             title="Close (Esc)"
           >
             <X className="w-5 h-5" />
@@ -104,7 +104,7 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="p-6 overflow-y-auto space-y-6 text-sm text-app-body leading-relaxed">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-5 sm:space-y-6 text-sm text-app-body leading-relaxed">
           {/* Secret Revocation Notice Banner if secret */}
           {isSecret && (
             <div className="p-4 rounded-[6px] bg-red-50 border border-red-200 text-red-900 space-y-1.5">
@@ -199,15 +199,15 @@ export function FindingDetailModal({ finding, onClose }: FindingDetailModalProps
         </div>
 
         {/* Modal Footer */}
-        <div className="p-4 border-t border-app-border bg-app-canvas flex items-center justify-between">
-          <span className="text-[11px] text-app-muted font-mono truncate max-w-[320px]">
+        <div className="p-3 sm:p-4 border-t border-app-border bg-app-canvas flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <span className="text-[11px] text-app-muted font-mono truncate max-w-full sm:max-w-[320px]">
             Fingerprint: {finding.fingerprint}
           </span>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onClose}
-            className="px-4 py-1.5 rounded-[6px] text-xs font-medium bg-app-primary text-white hover:bg-neutral-800 transition-colors shadow-xs"
+            className="w-full sm:w-auto px-4 py-1.5 rounded-[6px] text-xs font-medium bg-app-primary text-white hover:bg-neutral-800 transition-colors shadow-xs text-center"
           >
             Close
           </motion.button>
